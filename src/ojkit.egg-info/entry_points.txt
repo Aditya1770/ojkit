@@ -1,0 +1,2 @@
+[console_scripts]
+ojkit = ojkit.cli:main

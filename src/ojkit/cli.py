@@ -4,9 +4,9 @@ from InquirerPy.base.control import Choice
 from rich.console import Console
 from pathlib import Path
 
-import api
-import contest
-import runner
+from ojkit import api
+from ojkit import contest
+from ojkit import runner
 
 console = Console()
 
@@ -57,7 +57,7 @@ def runProblem():
 
     runner.runTests(folder, executable)
 
-def main():
+def runCli():
     parser = argparse.ArgumentParser(prog="ojkit", description="Online Judge Kit")
     
     parser.add_argument(
@@ -98,6 +98,13 @@ def main():
         contest.createTestCases(problem_folder, test_cases)
 
     console.print(f"[green]✓[/green] Created {problem_folder}")
+
+
+def main():
+    try:
+        runCli()
+    except KeyboardInterrupt:
+        console.print("\n[dim]Cancelled.[/dim]")
 
 
 if __name__ == "__main__":
