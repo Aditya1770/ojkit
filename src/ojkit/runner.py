@@ -27,7 +27,7 @@ def runTests(folder, executable):
     input_files = sorted(test_folder.glob("input*.txt"))
 
     for i, input_file in enumerate(input_files, start=1):
-        output_file = test_folder / f"output{1}.txt"
+        output_file = test_folder / f"output{i}.txt"
 
         input_data = input_file.read_text()
         expected_output = output_file.read_text()
