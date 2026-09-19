@@ -7,6 +7,7 @@ from pathlib import Path
 from ojkit import api
 from ojkit import contest
 from ojkit import runner
+from ojkit.config import getFolder, setFolder
 
 console = Console()
 
@@ -99,6 +100,12 @@ def runCli():
             help="Search problems by rating"
             )
 
+    parser.add_argument(
+            "--set-folder",
+            metavar="PATH",
+            help="Set the default folder"
+            )
+
     args = parser.parse_args()
     
     target = args.target
@@ -109,6 +116,11 @@ def runCli():
     
     if target and target.startswith("http"):
         downloadProblem(target)
+        return
+
+    if args.set_folder is not None:
+        folder = setFolder(args.set_folder)
+        console.print(f"[green]✓[/green] Problem folder set to {folder}")
         return
 
     rating = args.rating
@@ -124,7 +136,8 @@ def runCli():
     console.print(f"[green]✓[/green] Found {len(test_cases)} test cases")
 
     with console.status("Creating problem..."):
-        problem_folder = contest.createProblem("~/codeforces/", problem)
+        p_folder = getFolder()
+        problem_folder = contest.createProblem(p_folder, problem)
 
         contest.createTestCases(problem_folder, test_cases)
 

@@ -19,7 +19,7 @@ dependencies = [
     "beautifulsoup4",
     "InquirerPy",
     "rich",
-    "urllib",
+    "platformdirs",
 ]
 
 [project.scripts]
