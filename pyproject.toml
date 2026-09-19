@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ojkit"
-version = "0.1.0a1"
+version = "0.1.0"
 description = "Online Judge Kit"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,6 +19,7 @@ dependencies = [
     "beautifulsoup4",
     "InquirerPy",
     "rich",
+    "urllib",
 ]
 
 [project.scripts]
