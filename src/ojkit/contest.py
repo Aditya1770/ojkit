@@ -1,6 +1,24 @@
 from pathlib import Path
+from urllib.parse import urlparse
 
 TEMPLATE = Path(__file__).parent / "templates" / "default.cpp"
+
+def parseProblem(url):
+    path = urlparse(url).path
+    parts = path.strip("/").split("/")
+
+    if len(parts) >= 4 and parts[0] == "contest" and parts[2] == "problem":
+        return int(parts[1]), parts[3]
+
+    if len(parts) >= 4 and parts[0] == "problemset" and parts[1] == "problem":
+        contestId = int(parts[2])
+        index = parts[3]
+
+        return contestId, index
+    
+    return None
+
+
 
 def createProblem(folder, problem):
     folder = Path(folder).expanduser()

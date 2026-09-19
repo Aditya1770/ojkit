@@ -57,14 +57,39 @@ def runProblem():
 
     runner.runTests(folder, executable)
 
+def downloadProblem(url):
+    parsed = contest.parseProblem(url=url)
+
+    if parsed is None:
+        console.print("[red]Invalid Codeforces problem URL[/red")
+        return
+    
+    contestId, index = parsed
+
+    problem = {
+            "contestId": contestId,
+            "index": index
+        }
+
+    with console.status("Fetching test cases.."):
+        test_cases = api.getTestCases(problem)
+
+    problem_folder = contest.createProblem("~/codeforces/", problem)
+
+    contest.createTestCases(problem_folder, test_cases)
+
+    console.print(f"[green]✓[/green] Created {problem_folder}")
+
+
+
 def runCli():
     parser = argparse.ArgumentParser(prog="ojkit", description="Online Judge Kit")
     
     parser.add_argument(
-            "command",
+            "target",
             nargs="?",
-            choices=["run"]
-        )
+            help = ""
+            )
 
     parser.add_argument(
             "-r",
@@ -76,8 +101,14 @@ def runCli():
 
     args = parser.parse_args()
     
-    if args.command == "run":
+    target = args.target
+
+    if target == "run":
         runProblem()
+        return
+    
+    if target and target.startswith("http"):
+        downloadProblem(target)
         return
 
     rating = args.rating
